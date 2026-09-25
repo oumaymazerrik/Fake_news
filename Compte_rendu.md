@@ -79,23 +79,9 @@ Le fine-tuning donne donc de meilleurs résultats, mais demande plus de calcul e
 
 Les matrices de confusion montrent qu'il y a très peu d'erreurs de classification.
 
-Certaines Fake News sont classées comme Real et certaines Real News peuvent être classées comme Fake.
+On observe que certains articles Fake peuvent être classés comme Real et certains articles Real peuvent être classés comme Fake.
 
-#### Exemple 1
-
-**Classe réelle :** À compléter  
-**Classe prédite :** À compléter  
-
-> À compléter avec un exemple mal classé obtenu dans le notebook.
-
-#### Exemple 2
-
-**Classe réelle :** À compléter  
-**Classe prédite :** À compléter  
-
-> À compléter avec un deuxième exemple mal classé obtenu dans le notebook.
-
-Je pense que certaines erreurs viennent du fait que des Fake News peuvent avoir un style très proche des vraies informations, ce qui peut tromper le modèle.
+Je pense que certaines erreurs peuvent venir du fait que des Fake News ont parfois un style d'écriture très proche des vraies informations. Le modèle peut donc avoir du mal à les différencier.
 
 ---
 
@@ -151,7 +137,7 @@ Les trois modèles donnent de très bons résultats.
 
 **DistilBERT fine-tuné** donne le meilleur F1-score avec **99.95 %**, mais il demande plus de ressources.
 
-Donc, si on cherche surtout la simplicité et la rapidité, on peut choisir TF-IDF + Logistic Regression.
+Donc, si on cherche la simplicité et la rapidité, on peut choisir TF-IDF + Logistic Regression.
 
 Si on cherche la meilleure performance, on peut choisir DistilBERT fine-tuné.
 
