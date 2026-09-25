@@ -16,9 +16,13 @@
 
 ---
 
-## 2. Matrice de confusion
+## 2. Matrices de confusion
 
-### DistilBERT gelé + Logistic Regression
+### Baseline — TF-IDF + Logistic Regression
+
+![Matrice de confusion Baseline](matrice_de_confusion_baseline.png)
+
+### PLM gelé — DistilBERT + Logistic Regression
 
 ![Matrice de confusion PLM gelé](matrice_de_confusion_PLM_gelé.png)
 
@@ -67,27 +71,29 @@ Par contre, le fine-tuning prend plus de temps :
 - **DistilBERT gelé : 233.10 s**
 - **Fine-tuning : 369.80 s (~6.16 min)**
 
-Le fine-tuning donne donc de meilleurs résultats, mais demande plus de calcul.
+Le fine-tuning donne donc de meilleurs résultats, mais demande plus de calcul et nécessite un GPU.
 
 ---
 
 ### Q5 — Matrice de confusion : quelles classes se confondent ? Donnez 2 exemples d'erreurs et une hypothèse.
 
-Il y a très peu d'erreurs de classification car les résultats sont très élevés.
+Les matrices de confusion montrent qu'il y a très peu d'erreurs de classification.
+
+Certaines Fake News sont classées comme Real et certaines Real News peuvent être classées comme Fake.
 
 #### Exemple 1
 
 **Classe réelle :** À compléter  
 **Classe prédite :** À compléter  
 
-> À compléter avec un exemple mal classé.
+> À compléter avec un exemple mal classé obtenu dans le notebook.
 
 #### Exemple 2
 
 **Classe réelle :** À compléter  
 **Classe prédite :** À compléter  
 
-> À compléter avec un deuxième exemple mal classé.
+> À compléter avec un deuxième exemple mal classé obtenu dans le notebook.
 
 Je pense que certaines erreurs viennent du fait que des Fake News peuvent avoir un style très proche des vraies informations, ce qui peut tromper le modèle.
 
@@ -103,9 +109,9 @@ Les résultats sont :
 | DistilBERT gelé + LR | 99.37 % | 233.10 s | T4 |
 | DistilBERT Fine-tuning | 99.95 % | 369.80 s | T4 |
 
-Si on veut un modèle simple et rapide, **TF-IDF + Logistic Regression** est suffisant.
+Si on veut un modèle simple, rapide et moins coûteux, **TF-IDF + Logistic Regression** est un bon choix.
 
-Si on veut la meilleure performance, **DistilBERT fine-tuné** donne le meilleur résultat avec un F1-score de **99.95 %**.
+Si on cherche la meilleure performance, **DistilBERT fine-tuné** donne le meilleur résultat avec un F1-score de **99.95 %**.
 
 ---
 
@@ -125,7 +131,7 @@ SEED = 42
 
 Pour TF-IDF, j'ai utilisé `fit_transform()` seulement sur le Train et `transform()` sur Validation et Test.
 
-Pour le fine-tuning, j'ai surveillé la Validation Loss :
+Pour le fine-tuning, j'ai surveillé la Training Loss et la Validation Loss :
 
 | Epoch | Training Loss | Validation Loss | F1 |
 |---:|---:|---:|---:|
@@ -143,9 +149,11 @@ Les trois modèles donnent de très bons résultats.
 
 **TF-IDF + Logistic Regression** est le plus simple et le plus rapide.
 
-**DistilBERT fine-tuné** donne le meilleur F1-score avec **99.95 %**, mais demande plus de ressources.
+**DistilBERT fine-tuné** donne le meilleur F1-score avec **99.95 %**, mais il demande plus de ressources.
 
-Le choix dépend donc du besoin : si on cherche la simplicité et la rapidité, on peut utiliser TF-IDF + Logistic Regression. Si on cherche la meilleure performance, on peut utiliser DistilBERT fine-tuné.
+Donc, si on cherche surtout la simplicité et la rapidité, on peut choisir TF-IDF + Logistic Regression.
+
+Si on cherche la meilleure performance, on peut choisir DistilBERT fine-tuné.
 
 ---
 
@@ -160,4 +168,4 @@ Pour améliorer le projet, on peut :
 - tester le modèle sur des articles provenant de nouvelles sources ;
 - analyser davantage les erreurs de classification ;
 - tester d'autres modèles pré-entraînés ;
-- comparer les performances sur d'autres datasets.
+- comparer les résultats avec d'autres datasets.
