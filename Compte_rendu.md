@@ -16,37 +16,17 @@
 
 ---
 
-## 2. Matrices de confusion
-
-### TF-IDF + Logistic Regression
-
-> Insérer ici la capture de la matrice de confusion.
-
-```text
-[ CAPTURE MATRICE DE CONFUSION TF-IDF + LR ]
-```
+## 2. Matrice de confusion
 
 ### DistilBERT gelé + Logistic Regression
 
-> Insérer ici la capture de la matrice de confusion.
-
-```text
-[ CAPTURE MATRICE DE CONFUSION DISTILBERT GELÉ + LR ]
-```
-
-### DistilBERT Fine-tuning
-
-> Insérer ici la capture de la matrice de confusion.
-
-```text
-[ CAPTURE MATRICE DE CONFUSION FINE-TUNING ]
-```
+![Matrice de confusion PLM gelé](matrice_de_confusion_PLM_gelé.png)
 
 ---
 
-# 3. Questions
+## 3. Questions
 
-## Q1 — Les classes sont-elles équilibrées ? Quel impact sur le choix de la métrique ?
+### Q1 — Les classes sont-elles équilibrées ? Quel impact sur le choix de la métrique ?
 
 Oui, les classes sont assez équilibrées.
 
@@ -55,69 +35,65 @@ J'ai aussi utilisé le F1-score pour prendre en compte à la fois la précision 
 
 ---
 
-## Q2 — Quel score obtient la baseline TF-IDF + Logistic Regression ?
+### Q2 — Quel score obtient la baseline TF-IDF + Logistic Regression ?
 
-La baseline donne de très bons résultats :
+La baseline donne :
 
 - **Accuracy : 98.80 %**
 - **F1-score : 98.75 %**
 
-Donc même avec une méthode simple comme TF-IDF + Logistic Regression, on obtient déjà de bonnes performances.
+Donc même avec une méthode simple comme TF-IDF + Logistic Regression, on obtient déjà de très bons résultats.
 
 ---
 
-## Q3 — PLM gelé vs baseline : quel gain ? Pourquoi les embeddings contextuels aident-ils ?
+### Q3 — PLM gelé vs baseline : quel gain ? Pourquoi les embeddings contextuels aident-ils ?
 
 La baseline donne un F1-score de **98.75 %**, alors que DistilBERT gelé donne **99.37 %**.
 
-On gagne donc environ **0.62 point de F1**.
+Le gain est donc d'environ **0.62 point de F1**.
 
-DistilBERT donne de meilleurs résultats car il prend en compte le contexte des mots, contrairement à TF-IDF qui se base surtout sur leur importance dans les textes.
+DistilBERT donne de meilleurs résultats car il prend en compte le contexte des mots, contrairement à TF-IDF qui se base surtout sur l'importance des mots dans les textes.
 
 ---
 
-## Q4 — Fine-tuning vs PLM gelé : quel gain ? À quel coût ?
+### Q4 — Fine-tuning vs PLM gelé : quel gain ? À quel coût ?
 
-DistilBERT gelé donne un F1-score de **99.37 %** et le fine-tuning donne **99.95 %**.
+DistilBERT gelé donne un F1-score de **99.37 %**, alors que le fine-tuning donne **99.95 %**.
 
 Le gain est donc d'environ **0.58 point de F1**.
 
 Par contre, le fine-tuning prend plus de temps :
 
-- DistilBERT gelé : **233.10 s**
-- Fine-tuning : **369.80 s (~6.16 min)**
+- **DistilBERT gelé : 233.10 s**
+- **Fine-tuning : 369.80 s (~6.16 min)**
 
-Le fine-tuning est donc plus performant, mais demande plus de calcul.
+Le fine-tuning donne donc de meilleurs résultats, mais demande plus de calcul.
 
 ---
 
-## Q5 — Matrice de confusion : quelles classes se confondent ? Donnez 2 exemples d'erreurs et une hypothèse.
+### Q5 — Matrice de confusion : quelles classes se confondent ? Donnez 2 exemples d'erreurs et une hypothèse.
 
 Il y a très peu d'erreurs de classification car les résultats sont très élevés.
 
-### Exemple 1
+#### Exemple 1
 
-**Classe réelle :** ______  
-**Classe prédite :** ______  
+**Classe réelle :** À compléter  
+**Classe prédite :** À compléter  
 
-```text
-[ Mettre ici un exemple mal classé ]
-```
+> À compléter avec un exemple mal classé.
 
-### Exemple 2
+#### Exemple 2
 
-**Classe réelle :** ______  
-**Classe prédite :** ______  
+**Classe réelle :** À compléter  
+**Classe prédite :** À compléter  
 
-```text
-[ Mettre ici un deuxième exemple mal classé ]
-```
+> À compléter avec un deuxième exemple mal classé.
 
 Je pense que certaines erreurs viennent du fait que des Fake News peuvent avoir un style très proche des vraies informations, ce qui peut tromper le modèle.
 
 ---
 
-## Q6 — Quel modèle choisiriez-vous pour la production, et pourquoi ?
+### Q6 — Quel modèle choisiriez-vous pour la production, et pourquoi ?
 
 Les résultats sont :
 
@@ -127,15 +103,13 @@ Les résultats sont :
 | DistilBERT gelé + LR | 99.37 % | 233.10 s | T4 |
 | DistilBERT Fine-tuning | 99.95 % | 369.80 s | T4 |
 
-Le choix dépend des besoins.
-
 Si on veut un modèle simple et rapide, **TF-IDF + Logistic Regression** est suffisant.
 
-Si on cherche surtout la meilleure performance obtenue dans notre expérience, **DistilBERT fine-tuné** donne le meilleur F1-score.
+Si on veut la meilleure performance, **DistilBERT fine-tuné** donne le meilleur résultat avec un F1-score de **99.95 %**.
 
 ---
 
-## Q7 — Comment avez-vous évité le sur-apprentissage et la fuite test-in-train ?
+### Q7 — Comment avez-vous évité le sur-apprentissage et la fuite test-in-train ?
 
 J'ai séparé les données en :
 
@@ -149,7 +123,7 @@ J'ai aussi utilisé une seed fixe :
 SEED = 42
 ```
 
-Pour TF-IDF, j'ai fait `fit_transform()` seulement sur les données Train. Pour Validation et Test, j'ai seulement utilisé `transform()`.
+Pour TF-IDF, j'ai utilisé `fit_transform()` seulement sur le Train et `transform()` sur Validation et Test.
 
 Pour le fine-tuning, j'ai surveillé la Validation Loss :
 
@@ -163,7 +137,7 @@ La Validation Loss continue à diminuer, donc je n'ai pas observé de sur-appren
 
 ---
 
-# 4. Décision et justification
+## 4. Décision et justification
 
 Les trois modèles donnent de très bons résultats.
 
@@ -171,14 +145,19 @@ Les trois modèles donnent de très bons résultats.
 
 **DistilBERT fine-tuné** donne le meilleur F1-score avec **99.95 %**, mais demande plus de ressources.
 
-Le choix dépend donc du besoin : simplicité et rapidité, ou meilleure performance.
+Le choix dépend donc du besoin : si on cherche la simplicité et la rapidité, on peut utiliser TF-IDF + Logistic Regression. Si on cherche la meilleure performance, on peut utiliser DistilBERT fine-tuné.
 
 ---
 
-# 5. Limites et pistes d'amélioration
+## 5. Limites et pistes d'amélioration
 
-Les résultats sont très élevés, mais le dataset ISOT peut contenir des différences de style ou de source entre les Fake et les Real News.
+Les résultats sont très élevés, mais le dataset ISOT peut contenir des différences de style ou de source entre les Fake News et les Real News.
 
-Le modèle peut donc parfois apprendre ces différences au lieu de vraiment comprendre si une information est vraie ou fausse.
+Le modèle peut donc apprendre ces différences au lieu de vraiment comprendre si une information est vraie ou fausse.
 
-Pour améliorer le projet, on peut tester le modèle sur des articles provenant de nouvelles sources et analyser davantage les erreurs.
+Pour améliorer le projet, on peut :
+
+- tester le modèle sur des articles provenant de nouvelles sources ;
+- analyser davantage les erreurs de classification ;
+- tester d'autres modèles pré-entraînés ;
+- comparer les performances sur d'autres datasets.
